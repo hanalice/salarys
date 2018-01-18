@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>津贴查询</title>
+<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+<link rel="stylesheet" type="text/css" href="../css/common2.css"/>
+<script type="text/javascript" src="../js/jquery-1.9.0-min.js"></script>
+<script type="text/javascript" src="../js/jquery.json-2.4.min.js"></script>
+<script type="text/javascript" src="../js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/context.js"></script>
+<script type="text/javascript">
+	var _count = 15;
+	var headers = new Array();
+	headers[0] = { 'headName' : '序号', 'code' : 'defaultRank' };
+	headers[1] = { 'headName' : '姓名', 'code' : 'name' };
+	headers[2] = { 'headName' : '年份', 'code' : 'year' };
+	headers[3] = { 'headName' : '月份', 'code' : 'month' };
+	headers[4] = { 'headName' : '岗位津贴', 'code' : 'gangwei' };
+	headers[5] = { 'headName' : '本职岗位工作量津贴', 'code' : 'gongzuoliang' };
+	headers[6] = { 'headName' : '加项1', 'code' : 'jiaxiang1' };
+	headers[7] = { 'headName' : '加项2', 'code' : 'jiaxiang2' };
+	headers[8] = { 'headName' : '应发合计', 'code' : 'increase' };
+	headers[9] = { 'headName' : '扣上月个税', 'code' : 'personal_income_tax' };
+	headers[10] = { 'headName' : '扣项1', 'code' : 'kouxiang1' };
+	headers[11] = { 'headName' : '扣项2', 'code' : 'kouxiang2' };
+	headers[12] = { 'headName' : '扣款合计', 'code' : 'decrease' };
+	headers[13] = { 'headName' : '实发合计', 'code' : 'total' };
+	headers[14] = { 'headName' : '备注', 'code' : 'remark' };
+	
+	var params;
+	
+	$(document).ready(function(){
+		var year_html = '<select id="year">';
+		var currentYear = new Date().getFullYear();
+		for (var i=0; i<10; i++){
+			year_html += '<option value="'+(currentYear-i)+'">'+(currentYear-i)+'</option>';
+		}
+		year_html += '</select>';
+		$("#year_div").html(year_html);
+		
+		loginAccount = getQueryString("loginAccount");
+		if (loginAccount != '' && loginAccount != undefined){
+			if (loginAccount == 'admin'){
+				$("#button").html('<input id="subsidy_file" name="subsidy_file" type="file" /><button id="submit_subsidy" title="津贴报表上传">上传津贴报表</button>');
+				$("#name").removeClass("dno");
+			}
+		}else {
+			alert("您当前没有登录，请登录！");
+			if (confirm("确定") == 1) {
+				vLogout();
+			}
+		}
+		
+		var condition = {
+				'year' : $("#year").val(),
+				'month' : $("#month").val(),
+				'name' : $("#name").val()
+		};
+		params = {
+				'condition' : $.toJSON(condition),
+				'isPagination' : true,
+				'pageBean.pageSize' : _count
+		}
+		display_column(headers, params, loginAccount);
+		$("#submit_subsidy").click(function(){
+			var url = serverUrl + 'uploadAction.do?commonUpload';
+			var pm = new UploadFileManger(url,"subsidy");
+			pm.complete = function(data) {
+				if (data.status == 'success') {
+					alert("保存成功");
+				}else {
+					alert("保存失败，请确保此次上传为津贴报表！");
+				}
+				window.location.reload();
+			}
+			pm.post('subsidy_file');
+		});
+	});
+	
+	function display_column(header, params, account){
+		var url = serverUrl + 'salaryAction.do?querySubsidy';
+		var project_manager = new Container(true, "subsidy_list", "subsidy_list_container", 15);
+		project_manager.init(headers);
+		if(account == 'admin'){
+			project_manager.getDataByAjax(url, params, null);
+		}else{
+			project_manager.getDataByAjax(url, params, appendSumRow);
+		}
+	}
+	
+	function search(){
+		var condition = {
+				'year' : $("#year").val(),
+				'month' : $("#month").val(),
+				'name' : $("#name").val()
+		};
+		params = {
+				'condition' : $.toJSON(condition),
+				'isPagination' : true,
+				'pageBean.pageSize' : _count
+		}
+		display_column(headers, params, loginAccount);
+	}
+	
+	function vLogout() {
+		window.location.href = 'login.html';
+		loginAccount = '';
+	}
+	
+	function towordPath(url){
+		window.location.href = url+"?loginAccount="+loginAccount;
+		loginAccount = '';
+	}
+	
+	//添加数据统计行
+	function appendSumRow(resp){
+		var vtable=$("#subsidy_list_container");//得到表格的jquery对象  
+		var v=$("#subsidy_list_container tr.data");
+		//表格有多少个数据行 
+		var vcount=$("#subsidy_list_container tr.data").length;
+		//得到表格中的一行数据   
+		var vTr=$("#subsidy_list_container").find("tr.data:last");
+		//创建选定一行的副本对象vTrClone
+		var vTrClone=vTr.clone(true);
+		if(Math.round(vcount % 2) == 0){
+			vTrClone.removeClass("tr_even data");
+			vTrClone.addClass("tr_odd data");
+		}else{
+			vTrClone.removeClass("tr_odd data");
+			vTrClone.addClass("tr_even data");
+		}
+		//把副本单元格对象添加到表格下方
+		vTrClone.appendTo(vtable);
+		
+		if(vcount > 0){
+			var sumArray = new Array();   //先声明一维
+			for(var i=0; i<vcount; i++){
+				var subArray = new Array();
+				var cols = v[i].cells;
+				for(var j=0; j<cols.length; j++){
+					subArray.push(cols[j].innerHTML);
+					/* if(j < 4){
+						subArray[j] = "";
+					}else{
+						if(isNaN(parseFloat(cols[j].innerHTML))){
+							subArray[j] = "";
+						}else{
+							subArray[j] = parseFloat(cols[j].innerHTML);
+						}
+					}  */
+				} 
+				sumArray.push(subArray);
+			}
+			
+			
+			if(sumArray && sumArray.length > 0){
+				var total = new Array();
+				var rowLen = sumArray.length;
+				var colLen = sumArray[0].length;
+				//列
+				for (var m = 0; m < colLen; m++) {
+					//行
+					var result = 0;
+					for (var n = 0; n < rowLen; n++) {
+						result = accAdd(result,sumArray[n][m]);
+					}
+					total.push(result);
+				}
+				var vTrNew=$("#subsidy_list_container").find("tr:last").find("td");
+				for (var k = 0; k < vTrNew.length; k++) {
+					if(k < 4){
+						if (k == 0){
+							vTrNew[k].innerHTML = "总计";
+						}else{
+							vTrNew[k].innerHTML = "";
+						}
+					}else{
+						if( k == vTrNew.length-1){
+							vTrNew[k].innerHTML = "";
+						}else{
+							vTrNew[k].innerHTML = total[k]; 
+						}
+					}
+				} 
+			}
+		}
+	}
+</script>
+</head>
+<body>
+<div class="box">
+<div class="nav">
+	<ul>
+		<li>类型查询：</li>
+		<li><a href="javascript:towordPath('salary.html')">工资查询</a></li>
+		<li><a href="javascript:towordPath('subsidy.html')" class="active">津贴查询</a></li>
+		<li><a href="javascript:vLogout()" title="退出">退出</a></li>
+	</ul>
+</div>
+<div class="main">
+	<div id="search_pannel" class="search">
+		<div class="search_title">
+			<table style="width:100%;" >
+				<tr>
+					<td align="left" style="padding-left: 5px;">搜索</td>
+					<td align="right" valign="bottom" style="height:29px;"></td>
+				</tr>
+			</table>
+		</div>
+		<div class="search_content">
+				<table style="width:100%;">
+					<tr>
+						<td width="5%">
+							<div id="year_div"></div>
+					    </td>
+						<td width="5%">
+							<select id="month">
+								<option value="">请选择</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+							</select>
+						</td>
+						<td width="5%">
+							<input id="name" placeholder="请输入姓名" class="dno"/>
+					    </td>
+						<td width="5%">
+							<input type="button" value="搜索 " onclick="javascript:search()"/>
+						</td>
+						<td align="right">
+							<div id="button"></div>
+						</td>
+					</tr>
+				</table>
+			</div>
+	</div>
+	<div id="subsidy_list" style="margin-top : 20px;"></div>
+</div>
+</div>
+</body>
+</html>
