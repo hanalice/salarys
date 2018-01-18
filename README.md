@@ -1,2 +1,2 @@
-# salarys
-a simple salary check system
+# Info
+This is a simple salary check system.

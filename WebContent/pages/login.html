@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>工资查询系统</title>
+<script type="text/javascript" src="../js/jquery-1.9.0-min.js"></script>
+<script type="text/javascript" src="../js/jquery.form.js"></script>
+<script type="text/javascript" src="../js/context.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/jquery.validate.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#login_form").validate({
+		errorClass: "visual",
+		rules : {
+			name : {
+				required : true
+			},
+			password : {
+				required : true,
+				minlength : 6,
+				maxlength : 12
+			}
+		},
+		messages : {
+			username : {
+				required : '<em></em>请输入登录名/手机号码/员工工号!'
+			},
+			password : {
+				required : '<em></em>请输入密码!',
+				minlength : '<em></em>长度不少于6位！',
+				maxlength : '<em></em>长度不超过12位！'
+			}
+		},
+		errorPlacement: function(error, element) {
+			error.appendTo(element.parent());
+		},
+		submitHandler:function(form){
+			if($.trim($("#username").val())=="" || $.trim($("#password").val())==""){
+				alert("用户名或密码不能为空！");
+			}else{
+				var form ={
+    					'account' : $("#username").val(),
+    					'password' : $("#password").val()
+    			}
+				$.post(serverUrl +'userAction.do?queryUser',form, function(resp) {
+   					if(resp.status == 200 && resp.data.account){
+   						window.location.href = "salary.html?loginAccount="+resp.data.account;
+   					}else{
+   						alert("用户名或密码不正确，请重试！");
+   					}
+				});  
+			}    				
+		}
+	});
+});
+</script> 
+<style type="text/css">
+	<!--
+	.STYLE2 {color: #FFFFFF}
+	.STYLE4 {color: #FFFFFF; font-size:32; font-weight: bold; }
+	.STYLE5 {font-size: 14}
+	-->
+</style>
+
+</head>
+
+<body background="#C0C0C0" bgcolor="#C0C0C0">
+<p>
+  <script type="text/javascript">
+	<!--
+	function statusMessageObject(p,d) {
+	this.msg = MESSAGE
+	this.out = " "
+	this.pos = POSITION
+	this.delay = DELAY
+	this.i = 0
+	this.reset = clearMessage
+	}
+	function clearMessage() {
+	this.pos = POSITION
+	}
+	var POSITION = 100
+	var DELAY = 25
+	var MESSAGE = "欢迎您使用工资查询系统!"
+	var scroll = new statusMessageObject()
+	function scroller() {
+	for (scroll.i = 0; scroll.i < scroll.pos; scroll.i++) {
+	scroll.out += " "
+	}
+	if (scroll.pos >= 0)
+	scroll.out += scroll.msg
+	else scroll.out = scroll.msg.substring(-scroll.pos,scroll.msg.length)
+	window.status = scroll.out
+	scroll.out = " "
+	scroll.pos--
+	if (scroll.pos < -(scroll.msg.length)) {
+	scroll.reset()
+	}
+	setTimeout ('scroller()',scroll.delay)
+	}
+	function snapIn(jumpSpaces,position) {
+	var msg = scroll.msg
+	var out = ""
+	for (var i=0; i<position; i++)
+	{out += msg.charAt(i)}
+	for (i=1;i<jumpSpaces;i++)
+	{out += " "}
+	out += msg.charAt(position)
+	window.status = out
+	if (jumpSpaces <= 1) {
+	position++
+	if (msg.charAt(position) == ' ')
+	{position++ }
+	jumpSpaces = 100-position
+	} else if (jumpSpaces > 3)
+	{jumpSpaces *= .75}
+	else
+	{jumpSpaces--}
+	if (position != msg.length) {
+	var cmd = "snapIn(" + jumpSpaces + "," + position + ")";
+	scrollID = window.setTimeout(cmd,scroll.delay);
+	} else {
+	window.status=""
+	jumpSpaces=0
+	position=0
+	cmd = "snapIn(" + jumpSpaces + "," + position + ")";
+	scrollID = window.setTimeout(cmd,scroll.delay);
+	return false
+	}
+	return true
+	}
+	snapIn(100,0);
+	// -->
+</script>
+</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table width="600" height="488" border="0" align="center" background="../images/logbg.jpg">
+      <tbody><tr>
+        <td><table width="528" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tbody><tr>
+            <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tbody><tr>
+                  <td valign="top" height="160"><div align="center"><span class="main1 STYLE5"><span class="STYLE4">
+                    成都市技师学院工资查询系统！
+                  </span></span></div></td>
+                </tr>
+            </tbody></table></td>
+          </tr>
+          <tr>
+            <td><table width="100%" border="0" cellspacing="0" cellpadding="0" height="237">
+                <tbody><tr>
+                  <td valign="top">
+                  <form id="login_form" method="post" name="Login">
+                    <div align="left"> <br>
+                    <table width="239" border="0" align="center" cellpadding="0" cellspacing="0" id="table1">
+                              <tbody><tr>
+                                <td width="220" height="35" align="left"> 姓　　 名 ：</td>
+                                <td width="167" height="35" align="left"><input name="name" type="text" class="input" id="username" size="18">                              </td>
+                              </tr>
+                      
+                      <tr>
+                                <td width="220" height="35" align="left"> 密　　 码 ：</td>
+                                <td width="167" height="35" align="left"><input size="18" name="password" id="password" type="password"></td>
+                        </tr>
+                       <!--  <tr>
+                                <td width="200" height="35"> 验&nbsp; 证&nbsp; 码 ：</td>
+                                <td width="167" height="35" colspan="2"><input name="mofei" type="text" size="7">
+                                    <img src="getcode.asp"></td>
+                        </tr> -->
+                        <tr>
+                                <td height="1" colspan="2" align="left">                            </td></tr>
+                              <tr>
+                                <td height="30" colspan="2" align="center" valign="bottom">
+                                <input type="submit" value=" 登 录 " name="Submit" id="submit" style="BORDER-BOTTOM: 1px ridge; BORDER-LEFT: 1px ridge; BORDER-RIGHT: 1px ridge; BORDER-TOP: 1px ridge;FONT-SIZE: 9pt"> <input type="reset" value=" 重 填 " name="reset" style="BORDER-BOTTOM: 1px ridge; BORDER-LEFT: 1px ridge; BORDER-RIGHT: 1px ridge; BORDER-TOP: 1px ridge;FONT-SIZE: 9pt">  </td>
+                              </tr>
+                          </tbody></table>   
+                      <hr>
+                    </div></form>                      </td>
+                </tr>
+                <tr>
+                  <td valign="top" bgcolor="FFFFFF"><div align="left">
+                    <font color="#000000"><font color="blue"></font>
+                    <pre><font color="blue"></font><font style="BACKGROUND-COLOR: #ffffff" color="#000033" size="4" face="楷体">1、用户名为您的姓名。<br>
+                    <br>2、初始密码为您存折号后6位，登陆后请及时修改密码。<br>
+                    <br>3、如有疑问请与人事处联系，电话：028-61835011。<br>
+                    <br>4、你是本查询系统的第 <!-- <script language="javascript" src="counter.asp"></script> -->93304 查询者!</font> </pre></font></div></td>
+                </tr>
+            </tbody></table></td>
+          </tr>
+        </tbody></table>
+          <table width="428" height="14" border="0" align="center" cellpadding="0" cellspacing="0">
+            <tbody><tr>
+              <td height="14"><p align="center"><span class="STYLE2">&nbsp; 程序开发：</span><span class="STYLE2"><a href="http://jwc.cdsjs.com" target="_blank">教务处</a></span><font color="#FFFFFF"><font color="#C68E31"> &nbsp;&nbsp;&nbsp; </font> </font></p></td>
+            </tr>
+          </tbody></table></td>
+      </tr>
+    </tbody>
+</table>
+</body>
+</html>

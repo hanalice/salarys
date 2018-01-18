@@ -1,0 +1,494 @@
+@CHARSET "UTF-8";
+body {
+	width: 100%;
+	margin: 0 auto;
+	font-size: 12px;
+	font-family: arial,helvetica,sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	/*background-color: rgb(239,239,239);*/
+}
+img{
+	border:0px; 
+	margin:0px; 
+	padding:0px
+}
+ul,li,p{
+	list-style:none;
+	margin:0px;
+	padding:0px;
+}
+a{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	text-decoration: none;
+	color: #005ea7;
+	margin:0px; 
+	padding:0px;
+}
+a:hover{
+	color:#cc0000;
+	text-decoration: underline;
+}
+.liuyan_input{
+	width:170px;
+	height:23px;
+	border:1px solid #cccccc;
+}
+.login_input{
+	width:270px;
+	height:35px;
+	padding-left: 22px;
+	margin-top: 10px;
+	margin-bottom:10px;
+	border-radius: 4px;
+	border:1px solid #a0cae2;
+}
+.validate_input{
+	width:130px;
+	height:32px;
+	padding-left:4px;
+	margin-top: 10px;
+	margin-bottom:10px;
+	border-radius: 4px;
+	border:1px solid #a0cae2;
+}
+.username_input{
+	background:#ffffff url("../images/12_06.gif") no-repeat 3px 10px;
+}
+.password_input{
+	background:#ffffff url("../images/12_10.gif") no-repeat 3px 10px;
+}
+.flp1{
+	font-size: 14px;
+}
+.register_add{
+	width: 58px;
+	height: 29px;
+	border:0px;
+	background: url("../images/login_a.jpg") no-repeat;
+}
+.button1{
+	color: white;
+	font-weight: bold;
+	font-size: 18px;
+	border-radius: 4px;
+	height: 30px;
+	width: 120px;
+	border:0px;
+	background-color: #cc0000
+}
+.text1{
+	color:#0b73bb;
+	font-weight:bold;
+	font-size:13px;
+}
+.text2{
+	font-size:15px;
+	font-weight:bold;
+	color:#005ea7;
+}
+.text3{
+	font-size:15px;
+	color:grey;
+}
+.text4{
+	color: #c30; 
+	font-size: 12px; 
+	text-decoration: underline;
+}
+.text5{
+	font-size:13px;
+	font-weight:bold;
+	color:#ff8a00;
+}
+.text6{
+	font-size:25px;
+	color:grey;
+	font-weight: bold;
+}
+.border{
+	padding:4px;
+	color:grey;
+	margin-top:3px;
+	border:1px solid #a0cae2;
+	border-radius:5px;
+}
+.border2{
+	border:1px solid #a0cae2;
+}
+.title_div{
+	margin-top:18px;
+	margin-bottom:2px;
+}
+.title_div ul li{
+	float: left;
+	padding: 4px;
+}
+.title_div ul li{
+	margin-left: 8px;
+	border-radius: 5px 5px 0px 0px;
+	border-bottom: 0px;
+	background: #a0cae2;
+}
+.bg1{
+	color: white;
+	background: #ff8a00;
+}
+.title_line{
+	margin-bottom:1px;
+	height:5px;
+	background: #ff8a00;
+}
+.flk13{
+	color: #999;
+	font-size: 12px;
+}
+.flk13{
+	color: #005aa0;
+	
+}
+.img_margin{
+	margin-top: 0px;
+}
+.help{
+	font-size:13px;
+	font-weight:bold;
+	color:grey;
+	padding-left:7px;
+	text-decoration:underline;
+}
+.bg_link{
+	padding: 5px;
+	background: url("../images/bg_link.png") repeat-x;
+}
+.bg_task{
+	padding: 3px;
+	background: url("../images/bg_task.png") repeat-x;
+}
+.a_link{
+	padding-left: 10px;
+	padding-right: 11px;
+}
+.help_title{
+	padding-left:7px;
+	background: url("../images/gg_li_red.png") no-repeat 0px 3px;
+}
+#upper{
+	background:rgb(239,239,239);
+	border-bottom: 1px solid #cccccc;
+}
+#main{
+	width:990px;
+}
+#header{
+	margin:0px auto 0 auto;
+}
+ul.wangzhangg li{
+	height:25px;
+	padding-left:9px;
+	background: url("../images/gg_li_blue.png") no-repeat 0px 3px;
+}
+ul.wenxintishi li{
+	padding-left:9px;
+	line-height:24px;
+	background: url("../images/12_17.jpg") no-repeat 0px 10px;
+}
+
+#register{
+	background: #fefdfd;
+	margin-top: 21px;
+	margin-bottom: 10px;
+	border: 1px solid #eeeeee;
+	border-radius: 5px; 
+}
+
+#register h2{
+	color: #494949;
+	padding: 3px;
+	font-size: 25px;
+	margin: 10px;
+	border-bottom: 1px dashed #ccc;
+}
+#register h2 span{
+	font-size: 12px;
+	color: #333;
+}
+#register h2 span em{
+	height: 15px;
+	width: 15px;
+	margin-right: 5px;
+	margin-left: 30px;
+	background: url("../images/order.png");
+}
+#register_info tr td{
+	height: 60px;
+	padding-top: 9px;
+}
+#register_info tr td span.label{
+	color: #999;
+	font-size: 14px;
+	padding-right: 10px;
+} 
+b.ftx04{
+	color: #f00;
+	font-size: 16px;
+	font-weight: normal;
+	margin-right: 5px;
+}
+#register_info tr td input.text,#register_info tr td input.sub_text{
+	height:16px;
+	overflow: hidden;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	padding-left: 5px;
+	padding-right: 20px;
+	font-family: arial,"宋体";
+	color: #999999;
+	font-size: 14px;
+	border: 1px solid #cccccc;
+}
+#register_info tr td input.text{
+	width: 240px;
+	background: url("../images/msg_bg.png") scroll no-repeat 244px -142px;
+}
+#register_info tr td input.sub_text{
+	width: 130px;
+}
+#register_info tr td div.notice{
+	display: none;
+	height:16px;
+	width: 280px;
+	overflow: hidden;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	padding-left: 5px;
+	font-family: arial,"宋体";
+	border: 1px solid #dddddd;
+	font-size: 12px;
+	background-color:rgb(247, 247, 247);
+}
+#register_info tr td a.get_code{
+	padding-bottom: 11px;
+	padding-top: 11px;
+	padding-left: 8px;
+	padding-right: 8px;
+	width: 106px;
+	border: 1px solid #dddddd;
+	font-size: 12px;
+	background-color:rgb(247, 247, 247);
+}
+#email{
+	font-size: 12px; 
+}
+#email a{
+	text-decoration: underline;
+}
+#registsubmit{
+	width: 270px;
+	height: 36px;
+	font-family: "microsoft yahei";
+	text-align: center;
+	color: #fff;
+	font-weight: bold;
+	font-size: 14px;
+	border: 0px;
+	background: url("../images/regist-btn.jpg") #ffffff scroll no-repeat;
+}
+
+/*关于我们*/
+.col_left{
+	width: 22%;
+	padding-top: 25px;
+}
+.about_bg{
+	height: 40px;
+	background: url("../images/about_left.png") no-repeat;
+}
+ul.about_content{
+	height:410px;
+	background: url("../images/about_left_bg.png") repeat-y;
+}
+ul.about_content li{
+	height: 30px;
+	line-height: 30px;
+	padding-left: 20px;
+	text-align: left;
+	background: url("../images/about_left.png") no-repeat 0px -104px;
+}
+ul.about_content li a{
+	height: 25px;
+	line-height: 25px;
+	padding-left: 30px;
+	color: #6f6f6f;
+	font-size: 14px;
+}
+.col_right{
+	padding: 15px;
+	padding-left: 5px;
+}
+.col_right h2{
+	color: #494949;
+	padding: 3px;
+	font-size: 25px;
+	margin: 10px;
+	border-bottom: 1px dashed #ccc;
+}
+.jianjie{
+	line-height: 30px;
+	color: #6f6f6f;
+	font-size: 15px;
+	padding-left: 10px;
+	text-indent:2em;
+}
+#contact_us table tr td{
+	height: 28px;
+	color: #6f6f6f;
+	font-size: 15px;
+}
+#contact_us table tr td a{
+	color: #6f6f6f;
+	font-size: 15px;
+}
+
+/*遮罩层*/
+#bg{
+	position: absolute;
+	top: 0%;
+	width: 100%;
+	background-color: black;
+	z-index: 1;
+}
+#show{
+	position: absolute;
+	background-color: #ffffff;
+	z-index: 2;
+}
+
+.dno{
+	display : none;
+}
+
+/* ------------------列表样式开始-------------------- */
+.container {
+	width: 100%;
+	border: 1px #c4d9ee solid;
+}
+
+.container select{
+	font-size:13px;
+	height: 22px;
+	color: #296ebb;
+	width: 65px;
+	font-weight: bold;
+}
+
+#container_pagination{
+	border: 1px #c4d9ee solid;
+	border-top: 0px;
+	background: rgb(201, 234, 249);
+	height: 30px;
+}
+.paging-bottom{
+	padding-top: 5px;
+	text-align: right;
+	margin-right: 30px;
+}
+.paging_input{
+	font-size: 13px;
+}
+.paging_num_on{
+	padding-left: 7px;
+	padding-right: 7px;
+	margin-left: 3px;
+	margin-right: 3px;
+	height: 30px;
+	background: rgb(2, 128, 178);
+	border: 1px #0280b2 solid;
+	color: white;
+	cursor:pointer;
+}
+.container_paginationNumLink{
+	padding-left: 7px;
+	padding-right: 7px;
+	margin-left: 3px;
+	margin-right: 3px;
+	height: 30px;
+	border: 1px #0280b2 solid;
+}
+.paging_next{
+	padding-right:3px;
+	height: 30px;
+	border: 1px #0280b2 solid;
+}
+.paging_pre{
+	height: 30px;
+	border: 1px #0280b2 solid;
+}
+
+#container_pageid{
+	width: 45px;
+	height: 13px;
+}
+.container_togo{
+	margin-left: 4px;
+	margin-right: 5px;
+	vertical-align: sub;
+	cursor:pointer;
+}
+
+#title_head{
+	background: rgb(201, 234, 249);
+	height: 30px;
+}
+.container_head th{
+	height: 30px;
+	color: #296ebb;
+	font-size: 13px;
+	border-bottom: 1px #c4d9ee solid;
+}
+
+.data td {
+	vertical-align: middle;
+	text-align:center;
+	font-size: 12px;
+	padding-bottom: 0px;
+	word-break:break-all;
+}
+
+.data td div{
+	margin-bottom: 0px;
+}
+
+.data td a:visited {
+	text-decoration: none;
+	color: #ffb02e;
+}
+
+.data td a:hover {
+	text-decoration: none;
+	color: #ffb02e;
+}
+
+.data td a {
+	text-decoration: none;
+	color: #009fe3;
+	font-size: 12px;
+}
+
+.tr_odd{
+	height: 32px;
+	background: rgb(245, 243, 244);
+}
+
+.tr_even{
+	height: 32px;
+}
+.detailInfo tr td span{
+	font-size: 12px;
+}
+.detailInfo .detailtitle{
+	color: gray;
+	font-weight: bolder;
+}
+/* ------------------列表样式结束-------------------- */
