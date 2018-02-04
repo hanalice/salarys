@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -35,7 +36,7 @@ public class StringUtil extends StringUtils {
 	private static Pattern floatNumericPattern = Pattern.compile("^[0-9\\-\\.]+$");
 	private static Pattern abcPattern = Pattern.compile("^[a-z|A-Z]+$");
 	public static final String splitStrPattern = ",|，|;|；|、|\\.|。|-|_|\\(|\\)|\\[|\\]|\\{|\\}|\\\\|/| |　|\"";
-
+	
 	/**
 	 * @Description:Json串封装为对象
 	 * @param json
@@ -1278,5 +1279,27 @@ public class StringUtil extends StringUtils {
 		return newDate;
 	
 	}
-
+	
+	public static Object obj2SpecificType(Object obj, String type) {
+	   Object result = new Object();
+	   if ("java.lang.Float".equals(type)) {
+		   result = StringUtil.isNotEmpty(obj) ? Float.parseFloat((String) obj) : 0;
+	   }
+//	   if (obj instanceof Integer) {
+//		   result = ((Integer) obj).intValue();
+//	   } else if (obj instanceof String) {
+//		   result = (String) obj;
+//	   } else if (obj instanceof Double) {
+//		   result = ((Double) obj).doubleValue();
+//	   } else if (obj instanceof Float) {
+//		   result = ((Float) obj).floatValue();
+//	   } else if (obj instanceof Long) {
+//		   result = ((Long) obj).longValue();
+//	   } else if (obj instanceof Boolean) {
+//		   result = ((Boolean) obj).booleanValue();
+//	   } else if (obj instanceof Date) {
+//		   result = (Date) obj;
+//	   }  
+	   return result;
+	}
 }

@@ -13,7 +13,7 @@
 		<property name="removeAbandonedTimeout" value="60" />
 		<property name="username" value="root" />
 		<!-- <property name="password" value="56617570" /> -->
-		<property name="password" value="123456" />
+		<property name="password" value="passw0rd" />
 	</bean>
  
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">

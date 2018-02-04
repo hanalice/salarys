@@ -16,9 +16,9 @@
 		return '<select id="rf_displayColumn_a" onchange="rf_changeMultiColumnValue_a()" style="width:110px;">'
 		   +'<option value="gangwei">岗位工资</option>'
 		   +'<option value="xinji">薪级工资</option>'
+		   +'<option value="poison">有毒有害岗位津贴</option>'
 		   +'<option value="jiaotong">交通补贴</option><option value="liangyou">粮油补贴</option>'
 		   +'<option value="one_child">独生子女奖励</option><option value="jiaxiang">加项</option>'
-		   +'<option value="add1">其他1</option><option value="add2">其他2</option>'
 		   +'</select>';
 	};
 	
@@ -32,7 +32,7 @@
 	};
 	
 	var rf_selectList_a = function(data){
-		return '<span tid="gangwei">'+isNumeric(data.gangwei)+'</span><span tid="xinji" class="dno">'+isNumeric(data.xinji)+'</span><span tid="jiaotong" class="dno">'+isNumeric(data.jiaotong)+'</span><span tid="liangyou" class="dno">'+isNumeric(data.liangyou)+'</span><span tid="one_child" class="dno">'+isNumeric(data.one_child)+'</span><span tid="jiaxiang" class="dno">'+isNumeric(data.jiaxiang)+'</span><span tid="add1" class="dno">'+isNumeric(data.add1)+'</span><span tid="add2" class="dno">'+isNumeric(data.add2)+'</span>';
+		return '<span tid="gangwei">'+isNumeric(data.gangwei)+'</span><span tid="xinji" class="dno">'+isNumeric(data.xinji)+'</span><span tid="poison" class="dno">'+isNumeric(data.poison)+'</span><span tid="jiaotong" class="dno">'+isNumeric(data.jiaotong)+'</span><span tid="liangyou" class="dno">'+isNumeric(data.liangyou)+'</span><span tid="one_child" class="dno">'+isNumeric(data.one_child)+'</span><span tid="jiaxiang" class="dno">'+isNumeric(data.jiaxiang)+'</span>';
 	};
 	
 	var rf_selectList_b = function(data){
@@ -40,11 +40,7 @@
 	}; 
 	
 	var month= function(data){
-		if (data.month == '13') {
-			return '年终';
-		} else {
-			return data.month;
-		}
+		return data.month;
 	}
 	
 	var increase = function(data){
@@ -87,7 +83,7 @@
 		loginAccount = getQueryString("loginAccount");
 		if (loginAccount != '' && loginAccount != undefined){
 			if (loginAccount == 'admin'){
-				$("#button").html('<input id="salary_file" name="salary_file" type="file" /><button id="submit_salary" title="工资表上传">上传工资报表</button><input id="bonus_file" name="bonus_file" type="file" /><button id="submit_bonus" title="年终上传">上传年终报表</button>');
+				$("#button").html('<input id="salary_file" name="salary_file" type="file" /><button id="submit_salary" title="工资表上传">上传工资报表</button>');
 				$("#name").removeClass("dno");
 			}
 		}else {
@@ -179,7 +175,7 @@
 		var _currentType_a = $("#rf_displayColumn_a option:selected").val();
 		var _currentType_b = $("#rf_displayColumn_b option:selected").val();
 		rf_selectList_a = function(data){			
-			var _typeList_a = ['gangwei','xinji','jiaotong','liangyou','one_child','jiaxiang','add1','add2'];
+			var _typeList_a = ['gangwei','xinji','poison', 'jiaotong','liangyou','one_child','jiaxiang'];
 			var _typeHtml_a = '';
 			$.each(_typeList_a,function(i,info){
 				if(_currentType_a == info){
@@ -354,7 +350,6 @@
 								<option value="10">10</option>
 								<option value="11">11</option>
 								<option value="12">12</option>
-								<option value="13">年终</option>
 							</select>
 						</td>
 						<td width="5%">

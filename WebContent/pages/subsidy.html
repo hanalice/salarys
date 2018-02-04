@@ -18,16 +18,17 @@
 	headers[2] = { 'headName' : '年份', 'code' : 'year' };
 	headers[3] = { 'headName' : '月份', 'code' : 'month' };
 	headers[4] = { 'headName' : '岗位津贴', 'code' : 'gangwei' };
-	headers[5] = { 'headName' : '本职岗位工作量津贴', 'code' : 'gongzuoliang' };
+	headers[5] = { 'headName' : '工作量津贴', 'code' : 'gongzuoliang' };
 	headers[6] = { 'headName' : '加项1', 'code' : 'jiaxiang1' };
 	headers[7] = { 'headName' : '加项2', 'code' : 'jiaxiang2' };
-	headers[8] = { 'headName' : '应发合计', 'code' : 'increase' };
-	headers[9] = { 'headName' : '扣上月个税', 'code' : 'personal_income_tax' };
-	headers[10] = { 'headName' : '扣项1', 'code' : 'kouxiang1' };
-	headers[11] = { 'headName' : '扣项2', 'code' : 'kouxiang2' };
-	headers[12] = { 'headName' : '扣款合计', 'code' : 'decrease' };
-	headers[13] = { 'headName' : '实发合计', 'code' : 'total' };
-	headers[14] = { 'headName' : '备注', 'code' : 'remark' };
+	headers[8] = { 'headName' : '节日费', 'code' : 'holiday' };
+	headers[9] = { 'headName' : '应发合计', 'code' : 'increase' };
+	headers[10] = { 'headName' : '扣上月个税', 'code' : 'personal_income_tax' };
+	headers[11] = { 'headName' : '扣项1', 'code' : 'kouxiang1' };
+	headers[12] = { 'headName' : '扣项2', 'code' : 'kouxiang2' };
+	headers[13] = { 'headName' : '扣款合计', 'code' : 'decrease' };
+	headers[14] = { 'headName' : '实发合计', 'code' : 'total' };
+	headers[15] = { 'headName' : '备注', 'code' : 'remark' };
 	
 	var params;
 	
@@ -230,6 +231,12 @@
 								<option value="10">10</option>
 								<option value="11">11</option>
 								<option value="12">12</option>
+								<option value="公休未休">公休未休</option>
+								<option value="一季度奖金">一季度奖金</option>
+								<option value="二季度奖金">二季度奖金</option>
+								<option value="三季度奖金">三季度奖金</option>
+								<option value="四季度奖金">四季度奖金</option>
+								<option value="年终">年终</option>
 							</select>
 						</td>
 						<td width="5%">

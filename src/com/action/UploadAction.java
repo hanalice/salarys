@@ -1,12 +1,10 @@
-/**
- * 
- */
 package com.action;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,6 +31,7 @@ import com.dao.beans.SalarySubsidy;
 import com.dao.interfaces.SalaryDAO;
 import com.dao.interfaces.SalarySubsidyDAO;
 import com.util.StringUtil;
+import com.util.TestReflet;
 
 @Controller
 public class UploadAction extends BaseAction{
@@ -121,10 +120,6 @@ public class UploadAction extends BaseAction{
 							if (StringUtils.isNotEmpty(createSubsidy(str))) {
 								flag = Globals.successJsonStr;
 							}
-						}else if("bonus".equals(type)){
-							if (StringUtils.isNotEmpty(createBonus(str))) {
-								flag = Globals.successJsonStr;
-							}
 						}
 					}
 				}
@@ -142,7 +137,7 @@ public class UploadAction extends BaseAction{
 	}
 	
 	/**
-	 * 查看制定用户，制定年月是否已经上传过工资单,如果之前存在记录，则全部删除掉
+	 * 查看指定用户，指定年月是否已经上传过工资单,如果之前存在记录，则全部删除掉
 	 * @param userName
 	 * @param year
 	 * @param month
@@ -174,91 +169,71 @@ public class UploadAction extends BaseAction{
 	}
 	
 	/**
-	 * 查看制定用户，制定年月是否已经上传过年终,如果之前存在记录，则全部删除掉
-	 * @param userName
-	 * @param year
-	 * @param month
+	 * @param salaryStr
+	 * @return
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
+	 * @throws NumberFormatException 
+	 * @updated at 2018/1/28 23:59 add colume poison before jiaxiang colume
 	 */
-	/*private void checkBonusRepeat(String userName, String year, String month){
-		List<Bonus> bonus = bonusDAO.getByUserName(userName, year, month);
-		if (StringUtil.isNotEmpty(bonus)) {
-			for (Bonus temp : bonus) {
-				bonusDAO.delete(temp);
-			}
+	private String createSalary(String[] salaryStr) throws ClassNotFoundException, NumberFormatException, IllegalArgumentException, IllegalAccessException{
+		if (StringUtil.isNotEmpty(salaryStr[0]) && StringUtil.isNotEmpty(salaryStr[1]) && StringUtil.isNotEmpty(salaryStr[2])) {
+			checkSalaryRepeat(salaryStr[0], salaryStr[1], salaryStr[2]);
+			String[] salary_columes = Globals.SALARY_COLUMES;
+			
+			Salary salary = new Salary();
+	        Class clas= Class.forName(salary.getClass().getName());
+			if (!(clas.isInstance(salary))) {  
+	            System.out.println("传入的java实例与配置的java对象类型不符！");  
+	            return null;  
+	        }  
+	        Field[] fields = clas.getDeclaredFields();  
+	        ArrayList<String> fieldsNameList = new ArrayList<String>();  
+	        for (Field field : fields) {  
+	            fieldsNameList.add(field.getName());  
+	        }  
+	        for (int i = 0; i< salary_columes.length; i++) {
+	        	TestReflet.setBeanValue(salary, fields, fieldsNameList, salary_columes[i], salaryStr[i]);  
+	        }
+			return salaryDAO.save(salary);
+		}else {
+			return Globals.UPLOAD_ERROR;
 		}
-	}*/
-	
-	private String createSalary(String[] salaryStr){
-		checkSalaryRepeat(salaryStr[0], salaryStr[1], salaryStr[2]);
-		Salary salary = new Salary();
-		salary.setName(salaryStr[0]);
-		salary.setYear(salaryStr[1]);
-		salary.setMonth(salaryStr[2]);
-		salary.setGangwei(StringUtil.isNotBlank(salaryStr[3]) ? Float.valueOf(salaryStr[3]) : 0);
-		salary.setXinji(StringUtil.isNotBlank(salaryStr[4]) ? Float.valueOf(salaryStr[4]) : 0);
-		salary.setJiaotong(StringUtil.isNotBlank(salaryStr[5]) ? Float.valueOf(salaryStr[5]) : 0);
-		salary.setOne_child(StringUtil.isNotBlank(salaryStr[6]) ? Float.valueOf(salaryStr[6]) : 0);
-		salary.setLiangyou(StringUtil.isNotBlank(salaryStr[7]) ? Float.valueOf(salaryStr[7]) : 0);
-		salary.setJiaxiang(StringUtil.isNotBlank(salaryStr[8]) ? Float.valueOf(salaryStr[8]) : 0);                   
-		salary.setIncrease(StringUtil.isNotBlank(salaryStr[9]) ? Float.valueOf(salaryStr[9]) : 0);
-		
-		salary.setAnnual(StringUtil.isNotBlank(salaryStr[10]) ? Float.valueOf(salaryStr[10]) : 0);
-		salary.setYanglao(StringUtil.isNotBlank(salaryStr[11]) ? Float.valueOf(salaryStr[11]) : 0);
-		salary.setGongjijin(StringUtil.isNotBlank(salaryStr[12]) ? Float.valueOf(salaryStr[12]) : 0);
-		salary.setYiliao(StringUtil.isNotBlank(salaryStr[13]) ? Float.valueOf(salaryStr[13]) : 0);
-		salary.setShiye(StringUtil.isNotBlank(salaryStr[14]) ? Float.valueOf(salaryStr[14]) : 0);
-		
-		salary.setPersonal_income_tax(StringUtil.isNotBlank(salaryStr[15]) ? Float.valueOf(salaryStr[15]) : 0);
-		salary.setGonghui(StringUtil.isNotBlank(salaryStr[16]) ? Float.valueOf(salaryStr[16]) : 0);
-		salary.setKouxiang(StringUtil.isNotBlank(salaryStr[17]) ? Float.valueOf(salaryStr[17]) : 0);
-		salary.setDecrease(StringUtil.isNotBlank(salaryStr[18]) ? Float.valueOf(salaryStr[18]) : 0);
-		salary.setTotal(StringUtil.isNotBlank(salaryStr[19]) ? Float.valueOf(salaryStr[19]) : 0);
-		
-		//2th edition customer need to delete the field
-		//salary.setRemark(salaryStr[20]);
-		return salaryDAO.save(salary);
 	}
 	
-	private String createSubsidy(String[] subsidayStr){
-		checkSubsidyRepeat(subsidayStr[0], subsidayStr[1], subsidayStr[2]);
-		SalarySubsidy subsidy = new SalarySubsidy();
-		subsidy.setName(subsidayStr[0]);
-		subsidy.setYear(subsidayStr[1]);
-		subsidy.setMonth(subsidayStr[2]);
-		subsidy.setGangwei(StringUtil.isNotBlank(subsidayStr[3]) ? Float.valueOf(subsidayStr[3]) : 0);
-		subsidy.setGongzuoliang(StringUtil.isNotBlank(subsidayStr[4]) ? Float.valueOf(subsidayStr[4]) : 0);
-		subsidy.setJiaxiang1(StringUtil.isNotBlank(subsidayStr[5]) ? Float.valueOf(subsidayStr[5]) : 0);
-		subsidy.setJiaxiang2(StringUtil.isNotBlank(subsidayStr[6]) ? Float.valueOf(subsidayStr[6]) : 0);
-		subsidy.setIncrease(StringUtil.isNotBlank(subsidayStr[7]) ? Float.valueOf(subsidayStr[7]) : 0);
-		subsidy.setPersonal_income_tax(StringUtil.isNotBlank(subsidayStr[8]) ? Float.valueOf(subsidayStr[8]) : 0);
-		subsidy.setKouxiang1(StringUtil.isNotBlank(subsidayStr[9]) ? Float.valueOf(subsidayStr[9]) : 0);
-		subsidy.setKouxiang2(StringUtil.isNotBlank(subsidayStr[10]) ? Float.valueOf(subsidayStr[10]) : 0);
-		subsidy.setDecrease(StringUtil.isNotBlank(subsidayStr[11]) ? Float.valueOf(subsidayStr[11]) : 0);
-		subsidy.setTotal(StringUtil.isNotBlank(subsidayStr[12]) ? Float.valueOf(subsidayStr[12]) : 0);
-		subsidy.setRemark(subsidayStr[13]);
-		return salarySubsidyDAO.save(subsidy);
+	/**
+	 * @param salaryStr, already do the empty check
+	 * @return
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
+	 * @throws NumberFormatException 
+	 * @updated at 2018/1/28 23:59 add colume holiday before increase colume
+	 */
+	private String createSubsidy(String[] subsidayStr) throws ClassNotFoundException, NumberFormatException, IllegalArgumentException, IllegalAccessException{
+		if (StringUtil.isNotEmpty(subsidayStr[0]) && StringUtil.isNotEmpty(subsidayStr[1]) && StringUtil.isNotEmpty(subsidayStr[2])) {
+			checkSubsidyRepeat(subsidayStr[0], subsidayStr[1], subsidayStr[2]);
+			String[] subsidy_columes = Globals.SUBSIDY_COLUMES;
+			
+			SalarySubsidy subsidy = new SalarySubsidy();
+	        Class clas = Class.forName(subsidy.getClass().getName());
+			if (!(clas.isInstance(subsidy))) {  
+	            System.out.println("传入的java实例与配置的java对象类型不符！");  
+	            return null;  
+	        }  
+	        Field[] fields = clas.getDeclaredFields();  
+	        ArrayList<String> fieldsNameList = new ArrayList<String>();  
+	        for (Field field : fields) {  
+	            fieldsNameList.add(field.getName());  
+	        }  
+	        for (int i = 0; i< subsidy_columes.length; i++) {
+	        	TestReflet.setBeanValue(subsidy, fields, fieldsNameList, subsidy_columes[i], subsidayStr[i]);  
+	        }
+			
+			return salarySubsidyDAO.save(subsidy);
+		}else {
+			return Globals.UPLOAD_ERROR;
+		}
 	}
-	
-	private String createBonus(String[] bonusStr){
-		/*checkBonusRepeat(bonusStr[0], bonusStr[1], bonusStr[2]);
-		Bonus temp = new Bonus();
-		temp.setName(bonusStr[0]);
-		temp.setYear(bonusStr[1]);
-		temp.setMonth(bonusStr[2]);
-		temp.setBonus(StringUtil.isNotBlank(bonusStr[3]) ? Float.valueOf(bonusStr[3]) : 0);
-		temp.setAdd1(StringUtil.isNotBlank(bonusStr[4]) ? Float.valueOf(bonusStr[4]) : 0);
-		temp.setAdd2(StringUtil.isNotBlank(bonusStr[5]) ? Float.valueOf(bonusStr[5]) : 0);
-		temp.setRemark(bonusStr[6]);
-		return bonusDAO.save(temp);*/
-		
-		checkSalaryRepeat(bonusStr[0], bonusStr[1], "13");
-		Float total = StringUtil.isNotBlank(bonusStr[3]) ? Float.valueOf(bonusStr[3]) : 0;
-		Float add1 = StringUtil.isNotBlank(bonusStr[4]) ? Float.valueOf(bonusStr[4]) : 0;
-		Float add2 = StringUtil.isNotBlank(bonusStr[5]) ? Float.valueOf(bonusStr[5]) : 0;
-		String remark = bonusStr[6];
-		Salary temp = new Salary(bonusStr[0], bonusStr[1], "13", total, remark, add1, add2);
-		return salaryDAO.save(temp);
-		
-	}
-	
 }

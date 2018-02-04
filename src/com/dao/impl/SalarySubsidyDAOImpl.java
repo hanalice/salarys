@@ -28,14 +28,21 @@ public class SalarySubsidyDAOImpl extends BaseDAOImpl<SalarySubsidy> implements
 				criteria.add(Restrictions.eq("year", StringUtil.dateParseStringY(new Date())));
 			}
 			if (StringUtils.isNotEmpty(search.getMonth())) {
-				criteria.add(Restrictions.eq("month", search.getMonth()));
+				if (search.getMonth().contains("-")){
+					List<String> months = StringUtil.splitToList("-", search.getMonth());
+					criteria.add(Restrictions.ge("month", months.get(0)));
+					criteria.add(Restrictions.le("month", months.get(1)));
+				}
+				else {
+					criteria.add(Restrictions.eq("month", search.getMonth()));
+				}
 			}
 			if (StringUtils.isNotEmpty(search.getName())) {
 				criteria.add(Restrictions.like("name", search.getName()+"%"));
 			}
 		}
-		if ("admin".equals(user.getAccount())){
-			
+		if (null != user.getAccount() && "admin".equals(user.getAccount())){
+			System.out.println("admin is testing");
 		}else{
 			criteria.add(Restrictions.eq("name", user.getName()));
 		}
@@ -55,7 +62,14 @@ public class SalarySubsidyDAOImpl extends BaseDAOImpl<SalarySubsidy> implements
 				criteria.add(Restrictions.eq("year", StringUtil.dateParseStringY(new Date())));
 			}
 			if (StringUtils.isNotEmpty(search.getMonth())) {
-				criteria.add(Restrictions.eq("month", search.getMonth()));
+				if (search.getMonth().contains("-")){
+					List<String> months = StringUtil.splitToList("-", search.getMonth());
+					criteria.add(Restrictions.ge("month", months.get(0)));
+					criteria.add(Restrictions.le("month", months.get(1)));
+				}
+				else {
+					criteria.add(Restrictions.eq("month", search.getMonth()));
+				}
 			}
 			if (StringUtils.isNotEmpty(search.getName())) {
 				criteria.add(Restrictions.like("name", search.getName()+"%"));
@@ -79,6 +93,14 @@ public class SalarySubsidyDAOImpl extends BaseDAOImpl<SalarySubsidy> implements
 		criteria.add(Restrictions.eq("name", name));
 		criteria.add(Restrictions.eq("year", year));
 		criteria.add(Restrictions.eq("month", month));
+		if (month.contains("-")){
+			List<String> months = StringUtil.splitToList("-", month);
+			criteria.add(Restrictions.ge("month", months.get(0)));
+			criteria.add(Restrictions.le("month", months.get(1)));
+		}
+		else {
+			criteria.add(Restrictions.eq("month", month));
+		}
 		return findByCriteria(criteria);
 	}
 }
