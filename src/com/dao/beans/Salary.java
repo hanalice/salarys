@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -15,6 +16,10 @@ import org.hibernate.annotations.GenericGenerator;
 @PersistenceContext
 public class Salary {
 
+	/**
+	 * the volume order is exactly the same as follows, new add colume poison before jiaxiang colume
+	 * @updated at 2018/1/29
+	 */
 	private String id;
 	private String name;
 	private String year;
@@ -24,6 +29,7 @@ public class Salary {
 	private Float jiaotong;
 	private Float liangyou;
 	private Float one_child;
+	private Float poison;
 	private Float jiaxiang;
 	private Float increase;
 	private Float yanglao;
@@ -38,23 +44,17 @@ public class Salary {
 	private Float total;
 	private String remark;
 	
-	// customer need annual bonus, create on 2016-1-17
-	private Float add1;
-	private Float add2;
-	
 	public Salary() {
 		super();
 	}
 	public Salary(String name, String year, String month, Float total,
-			String remark, Float add1, Float add2) {
+			String remark) {
 		super();
 		this.name = name;
 		this.year = year;
 		this.month = month;
 		this.total = total;
 		this.remark = remark;
-		this.add1 = add1;
-		this.add2 = add2;
 	}
 	@Id
 	@GeneratedValue(generator = "generator")
@@ -114,6 +114,13 @@ public class Salary {
 	}
 	public void setOne_child(Float one_child) {
 		this.one_child = one_child;
+	}
+	
+	public Float getPoison() {
+		return poison;
+	}
+	public void setPoison(Float poison) {
+		this.poison = poison;
 	}
 	public Float getJiaxiang() {
 		return jiaxiang;
@@ -193,18 +200,4 @@ public class Salary {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public Float getAdd1() {
-		return add1;
-	}
-	public void setAdd1(Float add1) {
-		this.add1 = add1;
-	}
-	public Float getAdd2() {
-		return add2;
-	}
-	public void setAdd2(Float add2) {
-		this.add2 = add2;
-	}
-	
-	
 }

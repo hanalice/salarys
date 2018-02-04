@@ -14,6 +14,10 @@ import org.hibernate.annotations.GenericGenerator;
 @PersistenceContext
 public class SalarySubsidy {
 	
+	/**
+	 * the volume order is exactly the same as follows, new add colume holiday before increase colume
+	 * @updated at 2018/1/29
+	 */
 	private String id;
 	private String name;
 	private String year;
@@ -22,6 +26,7 @@ public class SalarySubsidy {
 	private Float gongzuoliang;
 	private Float jiaxiang1;
 	private Float jiaxiang2;
+	private Float holiday;
 	private Float increase;
 	private Float personal_income_tax;
 	private Float kouxiang1;
@@ -82,6 +87,12 @@ public class SalarySubsidy {
 	}
 	public void setJiaxiang2(Float jiaxiang2) {
 		this.jiaxiang2 = jiaxiang2;
+	}
+	public Float getHoliday() {
+		return holiday;
+	}
+	public void setHoliday(Float holiday) {
+		this.holiday = holiday;
 	}
 	public Float getIncrease() {
 		return increase;
