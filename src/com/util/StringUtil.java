@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -1283,7 +1282,7 @@ public class StringUtil extends StringUtils {
 	public static Object obj2SpecificType(Object obj, String type) {
 	   Object result = new Object();
 	   if ("java.lang.Float".equals(type)) {
-		   result = StringUtil.isNotEmpty(obj) ? Float.parseFloat((String) obj) : 0;
+		   result = isNotEmpty(obj) ? Float.parseFloat((String) obj) : 0;
 	   }
 //	   if (obj instanceof Integer) {
 //		   result = ((Integer) obj).intValue();

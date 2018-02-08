@@ -182,6 +182,11 @@ public class UploadAction extends BaseAction{
 			checkSalaryRepeat(salaryStr[0], salaryStr[1], salaryStr[2]);
 			String[] salary_columes = Globals.SALARY_COLUMES;
 			
+			System.out.println("alice craeteSalary");
+			for(int i=0; i<salaryStr.length; i++) {
+				System.out.println(salaryStr[i]);
+			}
+			
 			Salary salary = new Salary();
 	        Class clas= Class.forName(salary.getClass().getName());
 			if (!(clas.isInstance(salary))) {  
@@ -215,6 +220,11 @@ public class UploadAction extends BaseAction{
 		if (StringUtil.isNotEmpty(subsidayStr[0]) && StringUtil.isNotEmpty(subsidayStr[1]) && StringUtil.isNotEmpty(subsidayStr[2])) {
 			checkSubsidyRepeat(subsidayStr[0], subsidayStr[1], subsidayStr[2]);
 			String[] subsidy_columes = Globals.SUBSIDY_COLUMES;
+			
+			System.out.println("alice craeteSubside");
+			for (int i=0; i<subsidayStr.length; i++) {
+				System.out.println(subsidayStr[i]);
+			}
 			
 			SalarySubsidy subsidy = new SalarySubsidy();
 	        Class clas = Class.forName(subsidy.getClass().getName());

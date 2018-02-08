@@ -12,6 +12,11 @@
 <script type="text/javascript" src="../js/context.js"></script>
 <script type="text/javascript">
 	var _count = 15;
+	
+	var holiday= function(data){
+		return isNumeric(data.holiday);
+	}
+	
 	var headers = new Array();
 	headers[0] = { 'headName' : '序号', 'code' : 'defaultRank' };
 	headers[1] = { 'headName' : '姓名', 'code' : 'name' };
@@ -21,7 +26,7 @@
 	headers[5] = { 'headName' : '工作量津贴', 'code' : 'gongzuoliang' };
 	headers[6] = { 'headName' : '加项1', 'code' : 'jiaxiang1' };
 	headers[7] = { 'headName' : '加项2', 'code' : 'jiaxiang2' };
-	headers[8] = { 'headName' : '节日费', 'code' : 'holiday' };
+	headers[8] = { 'headName' : '节日费', 'formatter' : holiday };
 	headers[9] = { 'headName' : '应发合计', 'code' : 'increase' };
 	headers[10] = { 'headName' : '扣上月个税', 'code' : 'personal_income_tax' };
 	headers[11] = { 'headName' : '扣项1', 'code' : 'kouxiang1' };

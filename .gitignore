@@ -1,3 +1,5 @@
 *.class
 
  build/classes/*.xml
+/build
+/WEB-INF
